@@ -15,22 +15,21 @@ import utils.HibernateUtil;
 /**
  *
  * @author alumne
+ * @param <T>
  */
 public class ClasseDAO<T> {
 
-    private Session sesio;
+    private final Session sesio;
     private Transaction tx;
     
-    private Class p;
+    private final Class p;
 
     public ClasseDAO(Class<T> p, Session sesio) {
         this.p = p;
         this.sesio=sesio;
     }
 
-    public ClasseDAO() {
-        
-    }
+    
     
     public long insert(T objecte) throws HibernateException {
         long id = 0;

@@ -5,11 +5,18 @@
  */
 package entitats;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author mark
  */
+@Entity
+@Table(name = "tractaments")
+
 public class Tractaments {
+    
     private long _1_idTractament;
     private String _2_tipo;
     private String _3_descripcio;

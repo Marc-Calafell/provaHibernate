@@ -5,11 +5,12 @@
         <group>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/provahibernate/Inici.java</file>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Macetes.java</file>
+            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Model/ClasseDAO.java</file>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Bonsai.java</file>
+            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Tractaments.java</file>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Controlador/Controlador.java</file>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Model/Model.java</file>
             <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Vista/Vista.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/hibernate.cfg.xml</file>
         </group>
     </open-files>
 </project-private>

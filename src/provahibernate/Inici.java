@@ -17,46 +17,53 @@ import java.util.List;
 
 
 
+
 public class Inici {
-    
-    private static final  Model m = new Model(Bonsai.class);
+   
+    private static final Model m = new Model();
     private static final  Vista v = new Vista();
-    private static Controlador c;
+    
     
     public static void main(String[] args){
+        
+       new Controlador(m,v);
+       v.setVisible(true);
+      
      
-        c = new Controlador(m,v);
-        v.setVisible(true);
 //        
 //        long id=1;
 //
-        Bonsai bonsai1 = new Bonsai();
-        bonsai1.set2_nom("Saisho no bonsai");
-        bonsai1.set3_nomBotanic("Cydonia Oblonga");
+     //   Bonsai bonsai1 = new Bonsai();
+     //   bonsai1.set2_nom("Saisho no bonsai");
+     //   bonsai1.set3_nomBotanic("Cydonia Oblonga");
         
-        Bonsai bonsai2 = new Bonsai();
-        bonsai2.set2_nom("Saisho no bonsai");
-        bonsai2.set3_nomBotanic("Cydonia Oblonga");
+     //   Bonsai bonsai2 = new Bonsai();
+     //   bonsai2.set2_nom("Saisho no bonsai");
+     //   bonsai2.set3_nomBotanic("Cydonia Oblonga");
+     //   m.getDAOBonsai().insert(bonsai1);
+      //  m.getDAOBonsai().insert(bonsai2);
         
-        
+    //    Bonsai bonsai3 = new Bonsai();
         
         Macetes maceta1= new Macetes();
-        maceta1.setColor("verd");
-        maceta1.set2_forma("rectangular");
         
         
+//       maceta1.set3_color("verd");
+//       maceta1.set2_forma("rectangular");
+//        
+//      //  bonsai3.set2_nom("Saisho no bonsai");
+//      //  bonsai3.set3_nomBotanic("Cydonia Oblonga");
+//               
+//        m.getDAOMacetes().insert(maceta1);
+     //   m.getDAOBonsai().insert(bonsai3);
+            
+         
+     //   bonsai3.set4_maceta(maceta1);
+     //   maceta1.set4_bonsai(bonsai3);
         
-        ArrayList macetesA = new ArrayList();
-        macetesA.add(maceta1);
+     //   m.getDAOMacetes().update(maceta1);
+     //   m.getDAOBonsai().update(bonsai3);
         
-        Bonsai bonsai3 = new Bonsai();
-        bonsai3.set2_nom("Saisho no bonsai");
-        bonsai3.set3_nomBotanic("Cydonia Oblonga");
-        bonsai3.set4_macetes(macetesA);
-
-//        m.insert(bonsai1);
-//        m.insert(bonsai2);
-        m.insert(bonsai3);
 //        
 //        m.selectOne(bonsai1.getId_Bonsai());
 //        
@@ -71,9 +78,10 @@ public class Inici {
 //        m.update(bonsai2);
 //        
 //        m.delete(bonsai3);
- //       System.exit(0);
+//      System.exit(0);
         
     }
+  
         
 }
     
