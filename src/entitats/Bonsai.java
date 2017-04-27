@@ -6,6 +6,7 @@
 package entitats;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +41,7 @@ private Macetes _4_maceta;
 
 @OneToMany(cascade=javax.persistence.CascadeType.ALL)
 @JoinColumn(name="tractaments")
-private ArrayList _5_tractaments= new ArrayList();    
+private List<Tractaments> _5_tractaments= new ArrayList();    
 
     public Macetes get4_maceta() {
         return _4_maceta;
@@ -50,14 +51,16 @@ private ArrayList _5_tractaments= new ArrayList();
         this._4_maceta = _4_maceta;
     }
 
-    public ArrayList get5_tractaments() {
+    public List<Tractaments> get5_tractaments() {
         return _5_tractaments;
     }
 
-    public void set5_tractaments(ArrayList _5_tractaments) {
+    public void set5_tractaments(List<Tractaments> _5_tractaments) {
         this._5_tractaments = _5_tractaments;
     }
 
+    
+    
     public long get1_id_Bonsai() {
         return _1_id_Bonsai;
     }

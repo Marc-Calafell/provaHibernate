@@ -10,6 +10,7 @@ import Model.Model;
 import Vista.Vista;
 import entitats.Bonsai;
 import entitats.Macetes;
+import entitats.Tractaments;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class Inici {
         
     //    Bonsai bonsai3 = new Bonsai();
         
-        Macetes maceta1= new Macetes();
+       //Macetes maceta1= new Macetes();
         
         
 //       maceta1.set3_color("verd");
@@ -57,7 +58,11 @@ public class Inici {
 //        m.getDAOMacetes().insert(maceta1);
      //   m.getDAOBonsai().insert(bonsai3);
             
-         
+     Tractaments trac1 = new Tractaments();    
+     trac1.set2_tipo("transplant");
+     trac1.set3_descripcio("El vent ha fet caure la maceta i l'ha partit.");
+    // m.getDAOTractaments().insert(trac1);
+     
      //   bonsai3.set4_maceta(maceta1);
      //   maceta1.set4_bonsai(bonsai3);
         

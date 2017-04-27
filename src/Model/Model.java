@@ -21,8 +21,10 @@ public class Model {
 
     private static final Session sesio=HibernateUtil.getSessionFactory().openSession();
     private ClasseDAO<Bonsai> DAOBonsai= new ClasseDAO<>(Bonsai.class, sesio);
+    
     private ClasseDAO<Macetes> DAOMacetes= new ClasseDAO<>(Macetes.class, sesio);
     private ClasseDAO<Tractaments> DAOTractaments= new ClasseDAO<>(Tractaments.class, sesio);
+    
     public void tancaSessio() {
         sesio.close();
     }
@@ -31,10 +33,12 @@ public class Model {
         return DAOMacetes;
     }
 
-    
-
     public ClasseDAO<Bonsai> getDAOBonsai() {
         return DAOBonsai;
+    }
+
+    public ClasseDAO<Tractaments> getDAOTractaments() {
+        return DAOTractaments;
     }
 
    

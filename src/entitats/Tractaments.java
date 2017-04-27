@@ -5,7 +5,15 @@
  */
 package entitats;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -13,32 +21,73 @@ import javax.persistence.Table;
  * @author mark
  */
 @Entity
-@Table(name = "tractaments")
-
-public class Tractaments {
+public class Tractaments implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long _1_idTractament;
-    private String _2_tipo;
-    private String _3_descripcio;
-
     
+    @Column(name = "tipo")
+    private String _2_tipo;
+    
+    @Column(name = "descripcio")
+    private String _3_descripcio;
+    
+    @ManyToOne()
+    private Bonsai _4_bonsai;
 
-    public long getIdTractament() {   return _1_idTractament;  }
-    public void setIdTractament(long _1_idMaceta) { this._1_idTractament = _1_idMaceta; }
+    public long get1_idTractament() {
+        return _1_idTractament;
+    }
 
-    public String getTipo() { return _2_tipo; }
-    public void setTipo(String _2_tipo) { this._2_tipo = _2_tipo; }
+    public void set1_idTractament(long _1_idTractament) {
+        this._1_idTractament = _1_idTractament;
+    }
 
-    public String getDescripcio() { return _3_descripcio; }
-    public void setDescripcio(String _3_descripcio) { this._3_descripcio = _3_descripcio; }
+    public String get2_tipo() {
+        return _2_tipo;
+    }
+
+    public void set2_tipo(String _2_tipo) {
+        this._2_tipo = _2_tipo;
+    }
+
+    public String get3_descripcio() {
+        return _3_descripcio;
+    }
+
+    public void set3_descripcio(String _3_descripcio) {
+        this._3_descripcio = _3_descripcio;
+    }
+
+    public Bonsai get4_bonsai() {
+        return _4_bonsai;
+    }
+
+    public void set4_bonsai(Bonsai _4_bonsai) {
+        this._4_bonsai = _4_bonsai;
+    }
+    
+    
 
     public Tractaments() {
     }
-    
-    public Tractaments(String _2_tipo, String _3_descripcio) {
+
+    public Tractaments(long _1_idTractament, String _2_tipo, String _3_descripcio) {
+        this._1_idTractament = _1_idTractament;
         this._2_tipo = _2_tipo;
         this._3_descripcio = _3_descripcio;
-        
     }
+
+    
+    @Override
+    public String toString() {
+        return String.valueOf(_1_idTractament);
+    }
+    
+
+    
+
+    
     
 }

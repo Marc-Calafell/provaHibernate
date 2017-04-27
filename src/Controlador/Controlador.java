@@ -10,10 +10,13 @@ import Vista.Vista;
 import Model.Model;
 import entitats.Bonsai;
 import entitats.Macetes;
+import entitats.Tractaments;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.IntrospectionException;
@@ -43,18 +46,22 @@ public final class Controlador {
     
     public Model m;
     private Vista v;
+    private int filasel=-1;
     
     Bonsai bonsai/*=  (Bonsai) v.getjTable1().getValueAt(v.getjTable1().getSelectedRow(), 5)*/;
     int id;
     String nom;
     String nomBotanic;
-    
-    private int filasel=-1;
-    
+
     Macetes maceta/*= (Macetes) v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 4)*/;
     int idMaceta;
     String forma;
     String color;
+    
+    Tractaments trac;
+    int idTrac;
+    String motiu;
+    String tipus;
 
     public Controlador(Model m, Vista v) {
 
@@ -64,7 +71,7 @@ public final class Controlador {
        
         carregaTaula((ArrayList) m.getDAOBonsai().selectAll(),v.getjTable1(),Bonsai.class);
         carregaTaula((ArrayList) m.getDAOMacetes().selectAll(),v.getTaulaMacetes(),Macetes.class);
-        
+        carregaTaula((ArrayList) m.getDAOTractaments().selectAll(),v.getTaulaTractaments(),Tractaments.class);
         amagaObjecte();
         
         v.setVisible(true);
@@ -82,33 +89,25 @@ public final class Controlador {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (actionEvent.getSource().equals(v.getAddBTN())) {
                     Bonsai insert = new Bonsai();
+                    
                     insert.set2_nom(v.getNomJTF().getText());
                     insert.set3_nomBotanic(v.getNomBotanicJTF().getText());
-                    insert.set4_maceta(maceta);
+                    insert.set4_maceta((Macetes) v.getMacetesLliuresCB().getSelectedItem());
+                    
                     m.getDAOBonsai().insert(insert);
                     
-                    actualitzaTaula();
-                    
-                } else if(actionEvent.getSource().equals(v.getCreaMacetaBTN())){
-                    Macetes insert = new Macetes();
-                    insert.set2_forma(v.getFormaJTF().getText());
-                    insert.set3_color(v.getColorJTF().getText());
-                    insert.set4_bonsai(bonsai);
-                    
-                    m.getDAOMacetes().insert(insert);
-
-                    actualitzaTaula();    
-                    
+                    actualitzaTaula(); 
                             
                 } else if(actionEvent.getSource().equals(v.getUpdateBTN())){
                     Bonsai update= (Bonsai) v.getjTable1().getValueAt(v.getjTable1().getSelectedRow(), 5);
 
                     update.set2_nom(v.getNomJTF().getText());
                     update.set3_nomBotanic(v.getNomBotanicJTF().getText());
-                    update.set4_maceta(maceta);
-                    bonsai.set4_maceta(maceta);
+                    update.set4_maceta((Macetes) v.getMacetesLliuresCB().getSelectedItem());
+                    bonsai.set4_maceta((Macetes) v.getMacetesLliuresCB().getSelectedItem());
                     
-                    m.getDAOMacetes().update(maceta);
+                    m.getDAOMacetes().update((Macetes) v.getMacetesLliuresCB().getSelectedItem());
+                    
                     m.getDAOBonsai().update(update);
                     
                     actualitzaTaula();           
@@ -135,11 +134,11 @@ public final class Controlador {
                     Macetes update= (Macetes) v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 4);
                     update.set2_forma(v.getFormaJTF().getText());
                     update.set3_color(v.getColorJTF().getText());
-                    update.set4_bonsai(bonsai);
+                    update.set4_bonsai((Bonsai) v.getBonsaisLliuresCB().getSelectedItem());
                     
-                    bonsai.set4_maceta(maceta);
+                    bonsai.set4_maceta(update);
                                         
-                    m.getDAOBonsai().update(bonsai);
+                    m.getDAOBonsai().update((Bonsai) v.getBonsaisLliuresCB().getSelectedItem());
                     m.getDAOMacetes().update(update);
                                        
                     actualitzaTaula();
@@ -147,10 +146,56 @@ public final class Controlador {
                     
                 } else if(actionEvent.getSource().equals(v.getEsborrarMacetaBTN())){
                     Macetes esborrar= (Macetes) v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 4);
+                    
+                    
                     esborrar.set4_bonsai(null);
+                    bonsai.set4_maceta(null);
+                    m.getDAOBonsai().update(bonsai);
+                    
                     m.getDAOMacetes().delete(esborrar);
                      
-                     actualitzaTaula();
+                    actualitzaTaula();
+                     
+                    
+                } else if(actionEvent.getSource().equals(v.getCreaTractamentBTN())){
+                    Tractaments insert = new Tractaments();
+                    insert.set2_tipo(v.getTipusTracJTF().getText());
+                    insert.set3_descripcio(v.getMotiuTracJTA().getText());
+                    insert.set4_bonsai(bonsai);
+                    m.getDAOTractaments().insert(insert);
+
+                    actualitzaTaula();
+                    
+                    
+                } else if(actionEvent.getSource().equals(v.getEditaTractamentBTN())){
+                    Tractaments update= (Tractaments) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 4);
+                    update.set2_tipo(v.getFormaJTF().getText());
+                    update.set3_descripcio(v.getColorJTF().getText());
+                    update.set4_bonsai(bonsai);
+                    
+                    //bonsai.set5_tractaments(Tractaments);
+                                        
+//                    m.getDAOBonsai().update(bonsai);
+                    m.getDAOTractaments().update(update);
+                                       
+                    actualitzaTaula();
+                    
+                    
+                } else if(actionEvent.getSource().equals(v.getEsborraTractamentBTN())){
+                    Tractaments esborrar= (Tractaments) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 4);
+                    
+                    esborrar.set4_bonsai(null);
+                    //bonsai.set5_tractaments(null);
+                   // m.getDAOBonsai().update(bonsai);
+                    
+                   // m.getDAOTractaments().update(esborrar);
+                    
+                    m.getDAOTractaments().delete(esborrar);
+                     
+                     actualitzaTaula();     
+                     
+                     
+                     
                 
                 }  
                 
@@ -165,7 +210,17 @@ public final class Controlador {
         v.getCreaMacetaBTN().addActionListener(actionListener);
         v.getModificaMacetaBTN().addActionListener(actionListener);
         v.getEsborrarMacetaBTN().addActionListener(actionListener);
+        
+         v.getCreaTractamentBTN().addActionListener(actionListener);
+        v.getEditaTractamentBTN().addActionListener(actionListener);
+        v.getEsborraTractamentBTN().addActionListener(actionListener);
                 
+        
+       
+
+       
+        
+        
         
         MouseAdapter mouseAdapter=new MouseAdapter(){
             @Override
@@ -187,11 +242,15 @@ public final class Controlador {
                         
                         if (v.getjTable1().getValueAt(v.getjTable1().getSelectedRow(), 3)!= null){
   
+                            try{
+                            
                             maceta = (Macetes) v.getMacetesLliuresCB().getSelectedItem();
 
                             int idma = recorreTaula(v.getTaulaMacetes(), maceta.get1_idMaceta());
                             v.getTaulaMacetes().getSelectionModel().setSelectionInterval(idma, idma);
-
+                            } catch (NullPointerException ec){
+                            
+                            }
                         } 
 
                     }
@@ -215,12 +274,54 @@ public final class Controlador {
                         
                         color = (String) v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 2);
                         v.getColorJTF().setText(color);
-
+                        
+                        if (v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 3)!= null){
+                            bonsai = (Bonsai) v.getTaulaMacetes().getValueAt(v.getTaulaMacetes().getSelectedRow(), 3);
+                        }
                     }
                 } catch (NumberFormatException ex) {
                     System.out.println("Ha petat (MACETES): " + ex);
                     
                 }
+                
+                try {
+                   int filasel = v.getTaulaTractaments().getSelectedRow();
+                    if (filasel != -1) {
+                        
+                        trac =  (Tractaments) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 4);
+                        v.getBonsaisLliuresCB().setSelectedItem(maceta);
+
+                        tipus = (String) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 1);
+                        v.getTipusTracJTF().setText(tipus);
+                        
+                        motiu = (String) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 2);
+                        v.getMotiuTracJTA().setText(motiu);
+                        
+                        if (v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 3)!= null){
+                            bonsai = (Bonsai) v.getTaulaTractaments().getValueAt(v.getTaulaTractaments().getSelectedRow(), 3);
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    System.out.println("Ha petat (TRACTAMENTS): " + ex);
+                    
+                }
+                
+               // try {
+                    
+                   Bonsai fila = (Bonsai) v.getTotsElsBonsaiCB().getSelectedItem();
+                   
+                        filtraPerBonsai(fila);
+                        
+                    
+                    
+                
+                
+              //  } catch (Exception ex) {
+               //     System.out.println("Ha petat (TRACTAMENTS): " + ex);
+                    
+               // }
+
+            
                 
                 
             }
@@ -228,8 +329,11 @@ public final class Controlador {
         
         v.getjTable1().addMouseListener(mouseAdapter);
         v.getTaulaMacetes().addMouseListener(mouseAdapter);
+        v.getTaulaTractaments().addMouseListener(mouseAdapter);
+        
         
         FocusAdapter focusAdapter=new FocusAdapter(){
+            
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
@@ -257,8 +361,20 @@ public final class Controlador {
                 if(e.getSource().equals(v.getMacetesLliuresCB())){
                     maceta = (Macetes) v.getMacetesLliuresCB().getSelectedItem();
                 }
+                
+                if(e.getSource().equals(v.getTotsElsBonsaiCB())){
+                    bonsai = (Bonsai) v.getTotsElsBonsaiCB().getSelectedItem();
+                }
+                
+                if(e.getSource().equals(v.getTipusTracJTF())){
+                    tipus = v.getTipusTracJTF().getText().trim();
+                }
+                
+                if(e.getSource().equals(v.getMotiuTracJTA())){
+                    motiu = v.getMotiuTracJTA().getText().trim();
+                }               
             }
-        };
+        };        
     }
     
     
@@ -341,12 +457,12 @@ public final class Controlador {
         TableColumn column;
         for (int i = 0; i < taula.getColumnCount(); i++) {
             column = taula.getColumnModel().getColumn(i);
-            column.setMaxWidth(250);
+           // column.setMaxWidth(250);
         }
         
         ompleComboBoxMacetes(v.getBonsaisLliuresCB());
         ompleComboBoxBonsai(v.getMacetesLliuresCB());
-        
+        ompleComboBox(v.getTotsElsBonsaiCB());
         return columna;
 
     }
@@ -370,12 +486,17 @@ public final class Controlador {
         v.getTaulaMacetes().getColumnModel().getColumn(4).setMaxWidth(0);
         v.getTaulaMacetes().getColumnModel().getColumn(4).setPreferredWidth(0);
     
+        v.getTaulaTractaments().getColumnModel().getColumn(4).setMinWidth(0);
+        v.getTaulaTractaments().getColumnModel().getColumn(4).setMaxWidth(0);
+        v.getTaulaTractaments().getColumnModel().getColumn(4).setPreferredWidth(0);
+        
     }
     
     private void actualitzaTaula(){
         
         carregaTaula((ArrayList) m.getDAOBonsai().selectAll(),v.getjTable1(),Bonsai.class);
         carregaTaula((ArrayList) m.getDAOMacetes().selectAll(),v.getTaulaMacetes(),Macetes.class);
+        carregaTaula((ArrayList) m.getDAOTractaments().selectAll(),v.getTaulaTractaments(),Tractaments.class);
         amagaObjecte();
         netejaCamps();
     
@@ -425,17 +546,27 @@ public JComboBox ompleComboBoxBonsai(JComboBox comboBox) {
         v.getNomJTF().setText(net);
         v.getNomBotanicJTF().setText(net);
         
-//        bonsai= null;
-//        id=0;
-//        nom="";
-//        nomBotanic="";
-//        int filasel=-1;
-//        maceta= null;
-//        idMaceta=0;
-//        forma="";
-//        color="";
+        v.getTipusTracJTF().setText(net);
+        v.getMotiuTracJTA().setText(net);
+    }
+
+    private JComboBox ompleComboBox(JComboBox comboBox) {
+       
+        comboBox.removeAllItems(); 
+        List llista = m.getDAOBonsai().selectAll();
+        comboBox.addItem(null);
         
+        for(int i=0; i<llista.size();i++){
+            Bonsai m =(Bonsai) llista.get(i);
+            comboBox.addItem(m);
+
+
+        }
     
+    return comboBox;
+
+        
+        
     }
     
     public static class OrdenarMetodeClasseAlfabeticament implements Comparator {
@@ -466,5 +597,12 @@ public JComboBox ompleComboBoxBonsai(JComboBox comboBox) {
             return (int) (((Field) o1).getName().compareToIgnoreCase(((Field) o2).getName()));
         }
     }
+    
+    private void filtraPerBonsai(Bonsai fila) {
+             List<Tractaments> filtrar = fila.get5_tractaments();
+             
+             carregaTaula((ArrayList) filtrar,v.getTaulaTractaments(),Tractaments.class);
+        
+            }
     
 }

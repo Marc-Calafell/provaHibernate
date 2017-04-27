@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/provahibernate/Inici.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Macetes.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Model/ClasseDAO.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Bonsai.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/entitats/Tractaments.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Controlador/Controlador.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Model/Model.java</file>
-            <file>file:/home/mark/NetBeansProjects/MP6UF2/provaHibernate/src/Vista/Vista.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
